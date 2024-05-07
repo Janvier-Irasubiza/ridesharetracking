@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api'
 
 const mapContainerStyle = {
   width: '100%',
-  height: '100%',
+  height: '100vh', 
 };
 
 const center = {
@@ -42,43 +42,45 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="body">
-      <LoadScript
-        googleMapsApiKey="API_KEY"
-      >
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={center}
-          zoom={12}
+    <div>
+      <div className="body">
+        <LoadScript
+          googleMapsApiKey="API_KEY"
         >
-          <Polyline
-            path={stops.map(stop => stop.position)}
-            options={{
-              strokeColor: "#FF0000",
-              strokeOpacity: 1.0,
-              strokeWeight: 2,
-            }}
-          />
-          {driverPosition.lat && driverPosition.lng && (
-            <Marker
-              position={{ lat: driverPosition.lat, lng: driverPosition.lng }}
-              icon={{
-                url: "https://maps.google.com/mapfiles/kml/shapes/bus.png",
-                scaledSize: new window.google.maps.Size(40, 40),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(20, 20),
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={center}
+            zoom={12}
+          >
+            <Polyline
+              path={stops.map(stop => stop.position)}
+              options={{
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
               }}
             />
-          )}
-          {stops.map(stop => (
-            <Marker
-              key={stop.name}
-              position={stop.position}
-              label={stop.name}
-            />
-          ))}
-        </GoogleMap>
-      </LoadScript>
+            {driverPosition.lat && driverPosition.lng && (
+              <Marker
+                position={{ lat: driverPosition.lat, lng: driverPosition.lng }}
+                icon={{
+                  url: "https://maps.google.com/mapfiles/kml/shapes/bus.png",
+                  scaledSize: new window.google.maps.Size(40, 40),
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(20, 20),
+                }}
+              />
+            )}
+            {stops.map(stop => (
+              <Marker
+                key={stop.name}
+                position={stop.position}
+                label={stop.name}
+              />
+            ))}
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 };
